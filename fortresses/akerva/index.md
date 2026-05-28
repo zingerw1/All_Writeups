@@ -130,13 +130,13 @@ Viewing the page source of the landing page immediately reveals the first flag i
 AKERVA{Ikn0w_F0rgoTTEN#CoMmeNts}
 ```
 
-![[Pasted image 20260518090044.png]]
+![](Pasted-image-20260518090044.png)
 
 > **Lesson:** Always check the HTML source of every page. Developers often leave credentials or notes in comments.
 
 The source also confirms the site is running **WordPress**.
 
-![[Pasted image 20260518090335.png]]
+![](Pasted-image-20260518090335.png)
 
 ### Directory Fuzzing
 
@@ -236,7 +236,7 @@ Interesting Finding(s):
 
 Valid username found: **`aas`**
 
-![[Pasted image 20260518095829.png]]
+![](Pasted-image-20260518095829.png)
 
 Password bruteforce with `rockyou.txt` returned nothing, so we move on.
 
@@ -270,7 +270,7 @@ snmpbulkwalk -v2c -c public 10.13.37.11
 
 While enumerating SNMP output we spot a reference to a backup script and **Flag 2**.
 
-![[Pasted image 20260518110201.png]]
+![](Pasted-image-20260518110201.png)
 
 ---
 
@@ -309,7 +309,7 @@ curl -X POST http://10.13.37.11/scripts/backup_every_17minutes.sh
 
 This works — the script content is returned, containing **Flag 3**.
 
-![[Pasted image 20260518110742.png]]
+![](Pasted-image-20260518110742.png)
 
 ### What the Script Reveals
 
@@ -347,7 +347,7 @@ ffuf -c \
      -mc all -fc 404
 ```
 
-![[Pasted image 20260518142201.png]]
+![](Pasted-image-20260518142201.png)
 
 Download the backup:
 
@@ -363,7 +363,7 @@ Search the extracted backup for flags:
 grep -r "AKERVA{" .
 ```
 
-![[Pasted image 20260518142627.png]]
+![](Pasted-image-20260518142627.png)
 
 ---
 
@@ -383,7 +383,7 @@ file       [Status: 401]
 
 Visiting `/console` gives us the **Werkzeug interactive debugger** — a Python console locked behind a PIN.
 
-![[Pasted image 20260518122119.png]]
+![](Pasted-image-20260518122119.png)
 
 ---
 
@@ -529,7 +529,7 @@ print(f"PIN:    {rv}")
 print(f"Cookie: {cookie_name}")
 ```
 
-![[Pasted image 20260518150417.png]]
+![](Pasted-image-20260518150417.png)
 
 Enter the PIN at `/console` to unlock the Python interpreter.
 
@@ -539,7 +539,7 @@ Enter the PIN at `/console` to unlock the Python interpreter.
 
 The Werkzeug console lets you run Python one line at a time.
 
-![[Pasted image 20260518151343.png]]
+![](Pasted-image-20260518151343.png)
 
 Set up a Netcat listener on your machine:
 
@@ -565,9 +565,9 @@ python -c 'import pty; pty.spawn("/bin/bash")'
 
 ### Flag 5 & Flag 6
 
-![[Pasted image 20260518152036.png]]
+![](Pasted-image-20260518152036.png)
 
-![[Pasted image 20260518152037.png]]
+![](Pasted-image-20260518152037.png)
 
 ---
 
@@ -597,7 +597,7 @@ You should get a root shell. Navigate to `/root` for the flag.
 
 ### Flag 7
 
-![[Pasted image 20260518154621.png]]
+![](Pasted-image-20260518154621.png)
 
 ---
 
@@ -635,7 +635,7 @@ Using [dcode.fr](https://www.dcode.fr/vigenere-cipher):
 
 The tool identifies the key as `ILOVESPACE`.
 
-![[Pasted image 20260518160116.png]]
+![](Pasted-image-20260518160116.png)
 
 **Step 4 — Decrypt with the key**
 
